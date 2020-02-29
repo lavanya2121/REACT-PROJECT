@@ -1,26 +1,53 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+// import Counter from'./components/count'
+// import RandomGenerator from'./components/random'
+// import ListRandomGenerator from './components/listRandom'
+// import User from './components/user'
+// import UserTable from './components/userTable'
+// import RemoveByName from './components/removeByName'
+// import RemoveByEmail from './components/removeByEmail'//./means src folder
+import Tasks from './components/Tasks'//5th import task in App.js
+import {BrowserRouter,Link,Route} from 'react-router-dom';
+import Home from './components/Home'
+import AssignementList from './components/AssignementList'
+
+
+import {connect} from 'react-redux'
+import PostList from './components/PostList';
+import PostShow from './components/PostShow'
+// import Tasks from './components/Tasks';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <BrowserRouter>
+  <div>
+   <h1>Redux App</h1>
+   <Link to="/">Home</Link>
+   <Link to="/tasks">Tasks</Link>
+   <Link to="/assignements">Assignements</Link>
+   <Link to="/posts">Posts</Link>
+
+   <Route path="/" component={Home} exact={true} />
+   <Route path="/tasks" component={Tasks}  />
+   <Route path="/assignements" component={AssignementList} exact={true} />
+   <Route path="/posts" component={PostList} exact={true} />
+   <Route path="/posts/:id" component={PostShow}  />
     </div>
+    </BrowserRouter>
   );
 }
+const mapStateToProps=(state)=>{
+  return{
+    count:state.count,
+    random:state.random,
+    listRandom:state.listRandom,
+    user:state.user,
+    userTable:state.userTable,
+    removeByName:state.removeByName,
+    removeByEmail:state.removeByEmail
+  }
+}
+// const  wrappedComponent=connect(mapStateToProps)(App)
+// export default wrappedComponent
 
-export default App;
+export default connect(mapStateToProps)(App)

@@ -1,12 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import {Provider} from 'react-redux'//npm install react-redux
+import {startGetPosts} from './actions/postsActions'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import App from './App';//inside src folder we have App.js file 
+import configureStore from './store/configureStore'
+const store=configureStore()
+store.subscribe(()=>{
+    console.log(store.getState())
+})
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+console.log(store.getState())//to see the initial state values of a store
+
+store.dispatch(startGetPosts())
+
+const jsx=(
+    <Provider store={store}>
+    <App />
+    </Provider>
+)
+
+ReactDOM.render(jsx, document.getElementById('root'));
+
+
